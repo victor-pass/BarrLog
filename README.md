@@ -1,5 +1,9 @@
-# Worklogger
-Allows the logging of daily work
+# BarrLog
+BarrLog helps you record what you worked on, how long you spent on it, and how your projects progress over time.
+
+It started with a practical problem: when working on several projects, it is surprisingly difficult to reconstruct where the time actually went.
+
+Rather than building another elaborate productivity system, BarrLog focuses on the smallest useful unit: **what did I work on today?**
 
 This is a hono, solidjs, drizzle, neon Single page application with serverside rendering with cloudflare as the deployment target.
 
@@ -48,7 +52,7 @@ To re-generate typescript types for cloudflare bindings:
 pnpm run cf-typegen
 ```
 
-- [latest](https://worklogger.worklogger.workers.dev)
+- [latest](https://barr.victorpass.dev)
 - [all deployments](https://dash.cloudflare.com/0c855cdf521de8fed5ad5d3ac1c22763/workers/services/view/worklogger/production/deployments)
 - [Change subdomain](https://dash.cloudflare.com/0c855cdf521de8fed5ad5d3ac1c22763/workers/subdomain)
 

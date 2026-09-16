@@ -1,6 +1,6 @@
 {
-  "name": "Work Logger",
-  "short_name": "Worklogger",
+  "name": "Barr Log",
+  "short_name": "BarrLog",
   "description": "Log work",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
@@ -8,12 +8,12 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/log.icon.192x192.png",
+      "src": "/icon.192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/log.icon.512x512.png",
+      "src": "/icon.512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

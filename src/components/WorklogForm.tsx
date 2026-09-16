@@ -140,7 +140,7 @@ export function WorklogForm(props: WorkLogFormProps) {
         </li>
         <li class="action">
           <button type="submit" disabled={submitting()} name="save">
-            {submitting() ? "Saving..." : "Log Work"}
+            {submitting() ? "Saving..." : "Log"}
           </button>
           <button
             name="expand"
@@ -148,7 +148,7 @@ export function WorklogForm(props: WorkLogFormProps) {
             class="expand"
             onclick={() => setExpanded((prev) => !prev)}
           >
-            {expanded() ? "↓" : "Log Work ↑"}
+            {expanded() ? "↓" : "Log ↑"}
           </button>
         </li>
       </ul>

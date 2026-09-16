@@ -12,7 +12,7 @@ export const renderer = jsxRenderer(({ children }) => (
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="theme-color" content="#ffffff" />
       <link rel="manifest" href="/manifest.webmanifest" />
-      <title>Worklogger</title>
+      <title>BarrLog</title>
       {raw(generateHydrationScript())}
       <ViteClient />
       <Link href="/src/style.css" rel="stylesheet" />
