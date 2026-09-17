@@ -1,43 +1,42 @@
 {
-    "name": "WorkLogger",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "test": "vitest",
-        "build": "vite build && $npm_execpath run build:pwa",
-        "build:pwa": "tsx scripts/generate-service-worker.ts",
-        "preview": "$npm_execpath run build && vite preview",
-        "deploy": "$npm_execpath run build && wrangler deploy",
-        "cf-typegen": "wrangler types --env-interface CloudflareBindings",
-        "db": "wrangler secret put DATABASE_URL"
-    },
-    "dependencies": {
-        "@hono/node-server": "^2.1.1",
-        "@hono/oauth-providers": "^0.9.0",
-        "@neondatabase/serverless": "^1.1.0",
-        "@solidjs/router": "^1.0.0",
-        "@thisbeyond/solid-select": "^0.16.0",
-        "drizzle-orm": "1.0.0-rc.5-ab785fc",
-        "hono": "^4.13.5",
-        "solid-js": "^1.9.15",
-        "temporal-polyfill": "^1.0.4"
-    },
-    "devDependencies": {
-        "@cloudflare/vite-plugin": "^1.54.0",
-        "@electric-sql/pglite": "^0.5.8",
-        "@solidjs/testing-library": "^0.8.10",
-        "@testing-library/jest-dom": "^7.0.1",
-        "@types/node": "^26.3.0",
-        "@vitest/browser-playwright": "^4.1.11",
-        "dotenv": "^17.4.2",
-        "drizzle-kit": "1.0.0-rc.5-ab785fc",
-        "jsdom": "^30.0.1",
-        "tsx": "^4.23.12",
-        "vite": "^8.2.2",
-        "vite-plugin-solid": "^2.11.14",
-        "vite-ssr-components": "^0.6.1",
-        "vitest": "^4.1.11",
-        "workbox-build": "^7.4.1",
-        "wrangler": "^4.126.0"
-    }
+  "name": "barr-log",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest",
+    "build": "vite build && $npm_execpath run build:pwa",
+    "build:pwa": "tsx scripts/generate-service-worker.ts",
+    "preview": "$npm_execpath run build && vite preview",
+    "deploy": "$npm_execpath run build && wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@hono/oauth-providers": "^0.9.0",
+    "@neondatabase/serverless": "^1.1.0",
+    "@solidjs/router": "^1.0.0",
+    "@thisbeyond/solid-select": "^0.16.0",
+    "drizzle-orm": "1.0.0-rc.5-ab785fc",
+    "hono": "^4.13.5",
+    "solid-js": "^1.9.15",
+    "temporal-polyfill": "^1.0.4"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.54.0",
+    "@electric-sql/pglite": "^0.5.8",
+    "@solidjs/testing-library": "^0.8.10",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@types/node": "^26.3.0",
+    "@vitest/browser-playwright": "^4.1.11",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "1.0.0-rc.5-ab785fc",
+    "jsdom": "^30.0.1",
+    "tsx": "^4.23.12",
+    "vite": "^8.2.2",
+    "vite-plugin-solid": "^2.11.14",
+    "vite-ssr-components": "^0.6.1",
+    "vitest": "^4.1.11",
+    "workbox-build": "^7.4.1",
+    "wrangler": "^4.126.0"
+  }
 }
