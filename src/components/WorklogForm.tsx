@@ -46,12 +46,12 @@ export function WorklogForm(props: WorkLogFormProps) {
   );
 
   createEffect(() => {
-    const { time: propTime } = props.worklog() ?? { time: undefined };
+    const { time: worklogTime } = props.worklog() ?? { time: undefined };
     const { time: defaultTime } = defaultState();
     setState({
       ...defaultState(),
       ...props.worklog(),
-      time: propTime ? time.toLocalTime(propTime) : defaultTime,
+      time: worklogTime ? time.localInputTime(worklogTime) : defaultTime,
     });
   });
 
@@ -69,7 +69,7 @@ export function WorklogForm(props: WorkLogFormProps) {
       const res = await api.worklog.$post({
         json: {
           ...state,
-          time: time.toISOTime(state.time),
+          time: time.dateTime(state.time),
         },
       });
       if (!res.ok) throw new Error("Failed to save worklog entry");
@@ -80,7 +80,6 @@ export function WorklogForm(props: WorkLogFormProps) {
       props.onSubmitted();
     } catch (err) {
       // TODO: Can probably recreate this using an <ErrorBoundary>
-      console.error(err);
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setSubmitting(false);
@@ -105,7 +104,7 @@ export function WorklogForm(props: WorkLogFormProps) {
             name="time"
             value={state.time}
             onInput={(e) =>
-              setState("time", time.toISOTime(e.currentTarget.value))
+              setState("time", time.dateTime(e.currentTarget.value))
             }
           />
         </li>

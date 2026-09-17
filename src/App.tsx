@@ -11,8 +11,7 @@ export interface AppProps {
 const App: Component<AppProps> = ({ selectedDay, onSelectedDayChange }) => {
   const { time } = context();
 
-  const from = createMemo(() => time.toAPITime(selectedDay()));
-  const to = createMemo(() => time.toAPITime(selectedDay(), { days: 1 }));
+  const range = createMemo(() => time.dayTimeRange(selectedDay()));
 
   return (
     <>
@@ -23,7 +22,7 @@ const App: Component<AppProps> = ({ selectedDay, onSelectedDayChange }) => {
           onInput={(e) => onSelectedDayChange(e.currentTarget.value)}
         />
       </div>
-      <Worklogs from={from} to={to} />
+      <Worklogs range={range} />
     </>
   );
 };

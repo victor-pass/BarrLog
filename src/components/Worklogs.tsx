@@ -6,22 +6,16 @@ import { For, Show, Suspense } from "solid-js";
 import { WorklogData } from "@/api";
 
 type WorklogsProps = {
-  from: () => string;
-  to: () => string;
+  range: () => { from: string; to: string };
 };
 
-export function Worklogs({ from, to }: WorklogsProps) {
+export function Worklogs({ range }: WorklogsProps) {
   const { api } = context();
 
   const [worklogs, { refetch: refetchWorklogs }] = createResource(
-    () => ({ from: from(), to: to() }),
+    range,
     async (range) => {
-      const res = await api.worklog.$get({
-        query: {
-          from: range.from,
-          to: range.to,
-        },
-      });
+      const res = await api.worklog.$get({ query: range });
       return res.json();
     },
     { initialValue: [] },

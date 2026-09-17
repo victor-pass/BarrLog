@@ -2,7 +2,6 @@ import { Accessor } from "solid-js";
 import "temporal-polyfill/global";
 import "temporal-polyfill/types/global";
 
-const ZERO = { days: 0 };
 export class TimeAPI {
   date: Accessor<string>;
   zone: string;
@@ -12,14 +11,17 @@ export class TimeAPI {
     this.date = date;
   }
 
-  toAPITime(time: string, add?: Temporal.DurationLikeObject) {
-    return new Date(time)
-      .toTemporalInstant()
-      .toZonedDateTimeISO(this.zone)
-      .add({ ...ZERO, ...add })
-      .toString({ timeZoneName: "never" });
+  dayTimeRange(date: string) {
+    const from = Temporal.PlainDate.from(date).toZonedDateTime({
+      timeZone: this.zone,
+    });
+    return {
+      from: from.toString({ timeZoneName: "never" }),
+      to: from.add({ days: 1 }).toString({ timeZoneName: "never" }),
+    };
   }
-  toISOTime(time: string) {
+
+  dateTime(time: string) {
     return Temporal.PlainDate.from(this.date())
       .toZonedDateTime({
         plainTime: time,
@@ -27,8 +29,9 @@ export class TimeAPI {
       })
       .toString({ timeZoneName: "never" });
   }
-  toLocalTime(time: string) {
-    return Temporal.Instant.from(time)
+
+  localInputTime(dateTime: string) {
+    return Temporal.Instant.from(dateTime)
       .toZonedDateTimeISO(this.zone)
       .toPlainTime()
       .toString({
