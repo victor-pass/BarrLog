@@ -41,9 +41,14 @@ pnpm run deploy
 ```
 
 ## Adding Secrets to the cloudflare workers
-For a new cloudflare worker environment you must add the necesary secrets
-(see `.dev.vars.example` for all secrets used by the app) 
-`npx wrangler secret put ENV_VARIABLE`
+For a new cloudflare worker environment you must add the necesary secrets.
+
+To upload them in bulk the easiest way is to add them all from the .env file:
+`npx wrangler secret bulk .env`
+
+To add a single new secret: `npx wrangler secret put ENV_VARIABLE`
+
+(see `.dev.vars.example` for all secrets used by the app)
 
 ## Updating cloudflare bindings
 To re-generate typescript types for cloudflare bindings:
