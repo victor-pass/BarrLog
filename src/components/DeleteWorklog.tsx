@@ -11,7 +11,12 @@ export function DeleteWorklog(props: { id: number; onDeleted: () => void }) {
   };
 
   return (
-    <button class="delete" onClick={() => deleteWorklog(props.id)}>
+    <button
+      class="delete"
+      type="button"
+      aria-label="Delete worklog"
+      onClick={() => deleteWorklog(props.id)}
+    >
       ☒
     </button>
   );

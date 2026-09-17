@@ -49,7 +49,7 @@ export function Worklogs({ range }: WorklogsProps) {
   }
 
   return (
-    <ul>
+    <ul class="worklog-list">
       <Suspense fallback={<li>Loading...</li>}>
         <Show
           when={!worklogs.error}
@@ -67,6 +67,12 @@ export function Worklogs({ range }: WorklogsProps) {
               </li>
             )}
           </For>
+          <Show when={worklogs().length === 0}>
+            <li class="empty-state">
+              <strong>No work logged yet</strong>
+              <span>Add the first entry for this day below.</span>
+            </li>
+          </Show>
         </Show>
       </Suspense>
       <li class="forms">

@@ -20,7 +20,12 @@ export const Worklog = (props: WorklogProps) => {
       id={props.worklog.id.toString()}
     >
       <li class="name">
-        <button class="edit" onClick={props.onEdit}>
+        <button
+          class="edit"
+          type="button"
+          aria-label={props.editing ? "Stop editing worklog" : "Edit worklog"}
+          onClick={props.onEdit}
+        >
           {props.editing ? "✕" : "✎"}
         </button>
         {props.worklog.name}
