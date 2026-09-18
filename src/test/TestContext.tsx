@@ -4,7 +4,7 @@ import { AppContext, AppContextValue } from "@/context";
 import { ApiClient } from "@/api";
 import { TestTimeAPI } from "@/test/TestTimeAPI";
 import { splitProps, ParentComponent } from "solid-js";
-import { jsonResponse } from "./fixtures";
+import { jsonResponse, mockJSONRequest } from "./fixtures";
 
 type MockedApi<T> = { [K in keyof T]?: Mock };
 
@@ -21,13 +21,13 @@ type AppContextOverrides = {
 function testContext(overrides: AppContextOverrides): AppContextValue {
   const api = {
     worklog: {
-      $post: vi.fn(),
-      $delete: vi.fn(),
-      $get: vi.fn().mockResolvedValue(jsonResponse([])),
+      $post: mockJSONRequest({}),
+      $delete: mockJSONRequest({}),
+      $get: mockJSONRequest([]),
       ...overrides.api?.worklog,
     },
     label: {
-      $get: vi.fn().mockResolvedValue(jsonResponse([])),
+      $get: mockJSONRequest([]),
       ...overrides.api?.label,
     },
   } as any;

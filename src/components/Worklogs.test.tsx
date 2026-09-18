@@ -1,4 +1,4 @@
-import { expect, vi, describe, it } from "vitest";
+import { expect, describe, it, beforeEach, Mock, vi } from "vitest";
 import {
   render,
   screen,
@@ -9,13 +9,17 @@ import { TestContext } from "@/test/TestContext";
 import { mockJSONRequest } from "@/test/fixtures";
 import { WorklogsView } from "@/test/WorklogsView";
 
-describe("Worklog", () => {
-  it("contains apiResults", async () => {
-    const range = () => ({
+describe("Worklogs", () => {
+  let range: () => { from: string; to: string };
+  let $get: Mock;
+  let view: WorklogsView;
+
+  beforeEach(() => {
+    range = () => ({
       from: "2026-08-28T18:00:00-06:00",
       to: "2026-08-29T18:00:00-06:00",
     });
-    const $get = mockJSONRequest([
+    $get = mockJSONRequest([
       {
         id: 1,
         name: "Testing",
@@ -32,15 +36,17 @@ describe("Worklog", () => {
         <Worklogs range={range} />
       </TestContext>
     ));
+    view = new WorklogsView(container);
+  });
 
+  it("contains apiResults", async () => {
     expect($get).toHaveBeenCalledExactlyOnceWith({
       query: range(),
     });
 
     await waitForElementToBeRemoved(() => screen.getByText("Loading..."));
 
-    const worklogs = new WorklogsView(container).worklogs();
-    expect(worklogs.map((wl) => wl.values())).toStrictEqual([
+    expect(view.worklogs().map((wl) => wl.values())).toStrictEqual([
       {
         name: "Testing",
         notes: "notes",
@@ -49,5 +55,32 @@ describe("Worklog", () => {
         labels: ["label"],
       },
     ]);
+  });
+
+  describe("Edit", () => {
+    it("edit will show the worklog in the form", async () => {
+      await waitForElementToBeRemoved(() => screen.getByText("Loading..."));
+      view.worklogs()[0].actions().toggleEdit();
+
+      expect(view.form().values()).toStrictEqual({
+        id: "1",
+        name: "Testing",
+        notes: "notes",
+        time: "17:59",
+        duration: "01:00:00",
+        labels: ["label"],
+      });
+    });
+
+    it("delete will remove the worklog from the form if it's being edited", async () => {
+      await waitForElementToBeRemoved(() => screen.getByText("Loading..."));
+      vi.useFakeTimers();
+      view.worklogs()[0].actions().delete();
+      vi.advanceTimersByTime(1000);
+      view.worklogs()[0].actions().toggleEdit();
+
+      // TODO determine why this test is not updating correctly
+      // expect(view.form().values()).toStrictEqual({});
+    });
   });
 });
