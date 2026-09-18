@@ -110,7 +110,7 @@ export function WorklogForm(props: WorkLogFormProps) {
               name="time"
               value={state.time}
               onInput={(e) =>
-                setState("time", time.toISOTime(e.currentTarget.value))
+                setState("time", time.dateTime(e.currentTarget.value))
               }
             />
           </label>

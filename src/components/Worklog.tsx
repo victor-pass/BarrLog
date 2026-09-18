@@ -2,6 +2,7 @@ import { DeleteWorklog } from "@/components/DeleteWorklog";
 import { createSignal, For } from "solid-js";
 import { WorklogData } from "@/api";
 import { context } from "@/context";
+import { EditWorklog } from "./EditWorklog";
 
 interface WorklogProps {
   worklog: WorklogData;
@@ -22,14 +23,6 @@ export const Worklog = (props: WorklogProps) => {
       id={props.worklog.id.toString()}
     >
       <li class="name">
-        <button
-          class="edit"
-          type="button"
-          aria-label={props.editing ? "Stop editing worklog" : "Edit worklog"}
-          onClick={props.onEdit}
-        >
-          {props.editing ? "✕" : "✎"}
-        </button>
         <button
           class="worklog-title"
           type="button"
@@ -53,7 +46,8 @@ export const Worklog = (props: WorklogProps) => {
           {(label) => <span>{label.name}</span>}
         </For>
       </li>
-      <li>
+      <li class="actions">
+        <EditWorklog editing={props.editing} onEdit={props.onEdit} />
         <DeleteWorklog id={props.worklog.id} onDeleted={props.onDeleted} />
       </li>
     </ul>

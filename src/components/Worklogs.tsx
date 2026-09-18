@@ -12,14 +12,15 @@ type WorklogsProps = {
 export function Worklogs({ range }: WorklogsProps) {
   const { api } = context();
 
-  const [worklogs, { refetch: refetchWorklogs }] = createResource(
-    range,
-    async (range) => {
-      const res = await api.worklog.$get({ query: range });
-      return res.json();
-    },
-    { initialValue: [] },
-  );
+  const [worklogs, { refetch: refetchWorklogs, mutate: mutateWorklogs }] =
+    createResource(
+      range,
+      async (range) => {
+        const res = await api.worklog.$get({ query: range });
+        return res.json();
+      },
+      { initialValue: [] },
+    );
   const [labels, { refetch: refetchLabels }] = createResource(
     async () => {
       const res = await api.label.$get();
@@ -42,6 +43,12 @@ export function Worklogs({ range }: WorklogsProps) {
     };
   }
 
+  function deleteWorklog(wl: WorklogData) {
+    mutateWorklogs((prevWorklogs) =>
+      prevWorklogs.filter((item) => item.id !== wl.id),
+    );
+  }
+
   function worklogFormSubmit() {
     setFormExpanded(false);
     setEditingWorklog(undefined);
@@ -60,7 +67,7 @@ export function Worklogs({ range }: WorklogsProps) {
               <li>
                 <Worklog
                   worklog={worklog}
-                  onDeleted={refetchWorklogs}
+                  onDeleted={() => deleteWorklog(worklog)}
                   onEdit={edit(worklog)}
                   editing={worklog.id === editingWorklog()?.id}
                 />
