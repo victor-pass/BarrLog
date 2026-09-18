@@ -367,21 +367,21 @@ button.delete:focus-visible {
     padding-top: 0.25rem;
 }
 
-.worklogForm {
+.worklogForm ul {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.9rem;
     padding: 0.6rem;
 }
 
-.worklogForm .expandable {
+.worklogForm ul .expandable {
     display: none;
 }
-.worklogForm.expanded .expandable {
+.worklogForm.expanded ul .expandable {
     display: block;
 }
 
-.worklogForm.expanded {
+.worklogForm.expanded ul {
     grid-template-areas:
         "error"
         "name"

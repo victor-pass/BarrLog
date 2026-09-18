@@ -47,6 +47,7 @@ export function Worklogs({ range }: WorklogsProps) {
     mutateWorklogs((prevWorklogs) =>
       prevWorklogs.filter((item) => item.id !== wl.id),
     );
+    if (editingWorklog() == wl) setEditingWorklog(undefined);
   }
 
   function worklogFormSubmit() {
