@@ -92,54 +92,73 @@ export function WorklogForm(props: WorkLogFormProps) {
       <ul class="worklogForm" classList={{ expanded: expanded() }}>
         {error() && <li class="error">{error()}</li>}
         <li class="name expandable">
-          <input
-            name="name"
-            value={state.name}
-            onInput={(e) => setState("name", e.currentTarget.value)}
-          />
+          <label>
+            <span>What did you work on?</span>
+            <input
+              name="name"
+              placeholder="e.g. Project planning"
+              value={state.name}
+              onInput={(e) => setState("name", e.currentTarget.value)}
+            />
+          </label>
         </li>
         <li class="time expandable">
-          <input
-            type="time"
-            name="time"
-            value={state.time}
-            onInput={(e) =>
-              setState("time", time.dateTime(e.currentTarget.value))
-            }
-          />
+          <label>
+            <span>Start</span>
+            <input
+              type="time"
+              name="time"
+              value={state.time}
+              onInput={(e) =>
+                setState("time", time.dateTime(e.currentTarget.value))
+              }
+            />
+          </label>
         </li>
         <li class="duration expandable">
-          <input
-            name="duration"
-            type="text"
-            value={state.duration ?? ""}
-            onInput={(e) => setState("duration", e.currentTarget.value)}
-          />
+          <label>
+            <span>Duration</span>
+            <input
+              name="duration"
+              type="text"
+              placeholder="e.g. 1 hour"
+              value={state.duration ?? ""}
+              onInput={(e) => setState("duration", e.currentTarget.value)}
+            />
+          </label>
         </li>
         <li class="notes expandable">
-          <textarea
-            name="notes"
-            rows="5"
-            cols="40"
-            placeholder="Notes..."
-            onInput={(e) => setState("notes", e.currentTarget.value)}
-            value={state.notes ?? ""}
-          />
+          <label>
+            <span>Notes</span>
+            <textarea
+              name="notes"
+              rows="4"
+              cols="40"
+              placeholder="Add context, decisions, or next steps"
+              onInput={(e) => setState("notes", e.currentTarget.value)}
+              value={state.notes ?? ""}
+            />
+          </label>
         </li>
         <li class="labels expandable">
-          <Show when={mounted()}>
-            <Select
-              name="labels"
-              multiple
-              {...selectProps}
-              initialValue={state.labels}
-              onChange={(selected: LabelData[]) => setState("labels", selected)}
-            />
-          </Show>
+          <div class="field-label">
+            <span>Labels</span>
+            <Show when={mounted()}>
+              <Select
+                name="labels"
+                multiple
+                {...selectProps}
+                initialValue={state.labels}
+                onChange={(selected: LabelData[]) =>
+                  setState("labels", selected)
+                }
+              />
+            </Show>
+          </div>
         </li>
         <li class="action">
           <button type="submit" disabled={submitting()} name="save">
-            {submitting() ? "Saving..." : "Log"}
+            {submitting() ? "Saving…" : "Save entry"}
           </button>
           <button
             name="expand"
@@ -147,7 +166,7 @@ export function WorklogForm(props: WorkLogFormProps) {
             class="expand"
             onclick={() => setExpanded((prev) => !prev)}
           >
-            {expanded() ? "↓" : "Log ↑"}
+            {expanded() ? "Close" : "Add worklog"}
           </button>
         </li>
       </ul>

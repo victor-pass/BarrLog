@@ -11,7 +11,10 @@ interface Values {
 export class WorklogView {
   container: HTMLElement;
 
-  #field = (name: string) => this.container.querySelector(`li.${name}`)!;
+  #querySelector = (selectors: string) =>
+    this.container.querySelector(selectors);
+  #field = (name: string) => this.#querySelector(`li.${name}`)!;
+  #button = (name: string) => this.#querySelector(`button.${name}`);
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -29,13 +32,22 @@ export class WorklogView {
     };
   }
 
-  editToggle() {
-    const button = this.container.querySelector("button.edit")!;
-    fireEvent.click(button);
+  classes() {
+    return [...this.#querySelector(".worklog")!.classList];
   }
 
-  delete() {
-    const button = this.container.querySelector("button.delete")!;
-    fireEvent.click(button);
+  buttons() {
+    return {
+      edit: this.#button("edit")?.textContent,
+      delete: this.#button("delete")?.textContent,
+      cancelDelete: this.#button("cancel-delete")?.textContent,
+    };
+  }
+  actions() {
+    return {
+      toggleEdit: () => fireEvent.click(this.#button("edit")!),
+      delete: () => fireEvent.click(this.#button("delete")!),
+      cancelDelete: () => fireEvent.click(this.#button("cancel-delete")!),
+    };
   }
 }

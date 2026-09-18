@@ -6,21 +6,15 @@ import {
 } from "@solidjs/testing-library";
 import { Worklogs } from "./Worklogs";
 import { TestContext } from "@/test/TestContext";
-import { jsonResponse } from "@/test/fixtures";
+import { mockJSONRequest } from "@/test/fixtures";
 import { WorklogsView } from "@/test/WorklogsView";
 
-const mockJSONRequest = (object: any) =>
-  vi.fn().mockResolvedValue(jsonResponse(object));
-
-describe("Worklogs", () => {
+describe("Worklog", () => {
   it("contains apiResults", async () => {
     const range = () => ({
       from: "2026-08-28T18:00:00-06:00",
       to: "2026-08-29T18:00:00-06:00",
     });
-    const api = {
-      worklog: {},
-    };
     const $get = mockJSONRequest([
       {
         id: 1,
@@ -48,7 +42,7 @@ describe("Worklogs", () => {
     const worklogs = new WorklogsView(container).worklogs();
     expect(worklogs.map((wl) => wl.values())).toStrictEqual([
       {
-        name: "✎Testing",
+        name: "Testing",
         notes: "notes",
         time: "8/29/2026, 5:59 PM UTC",
         duration: "01:00:00",

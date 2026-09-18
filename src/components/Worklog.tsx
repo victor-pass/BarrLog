@@ -1,7 +1,8 @@
 import { DeleteWorklog } from "@/components/DeleteWorklog";
-import { For } from "solid-js";
+import { createSignal, For } from "solid-js";
 import { WorklogData } from "@/api";
 import { context } from "@/context";
+import { EditWorklog } from "./EditWorklog";
 
 interface WorklogProps {
   worklog: WorklogData;
@@ -13,27 +14,40 @@ interface WorklogProps {
 export const Worklog = (props: WorklogProps) => {
   const { time } = context();
   const worklogTime = time.displayDateTime(props.worklog.time);
+  const [titleExpanded, setTitleExpanded] = createSignal(false);
+
   return (
     <ul
       class="worklog"
-      classList={{ editing: props.editing }}
+      classList={{ editing: props.editing, "title-expanded": titleExpanded() }}
       id={props.worklog.id.toString()}
     >
       <li class="name">
-        <button class="edit" onClick={props.onEdit}>
-          {props.editing ? "✕" : "✎"}
+        <button
+          class="worklog-title"
+          type="button"
+          title={props.worklog.name}
+          aria-label={`Show full title: ${props.worklog.name}`}
+          aria-expanded={titleExpanded()}
+          onClick={() => setTitleExpanded((expanded) => !expanded)}
+        >
+          {props.worklog.name}
         </button>
-        {props.worklog.name}
       </li>
       <li class="notes">{props.worklog.notes}</li>
       <li class="duration">{props.worklog.duration}</li>
       <li class="time">{worklogTime}</li>
-      <li class="labels">
+      <li
+        class="labels"
+        aria-label={`Labels: ${props.worklog.labels.map((label) => label.name).join(", ")}`}
+        title={props.worklog.labels.map((label) => label.name).join(", ")}
+      >
         <For each={props.worklog.labels}>
           {(label) => <span>{label.name}</span>}
         </For>
       </li>
-      <li>
+      <li class="actions">
+        <EditWorklog editing={props.editing} onEdit={props.onEdit} />
         <DeleteWorklog id={props.worklog.id} onDeleted={props.onDeleted} />
       </li>
     </ul>

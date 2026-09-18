@@ -14,16 +14,25 @@ const App: Component<AppProps> = ({ selectedDay, onSelectedDayChange }) => {
   const range = createMemo(() => time.dayTimeRange(selectedDay()));
 
   return (
-    <>
-      <div class="filter">
-        <input
-          type="date"
-          value={selectedDay()}
-          onInput={(e) => onSelectedDayChange(e.currentTarget.value)}
-        />
-      </div>
-      <Worklogs range={range} />
-    </>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Daily time log</p>
+          <h1>BarrLog</h1>
+        </div>
+        <label class="filter">
+          <span>Viewing</span>
+          <input
+            type="date"
+            value={selectedDay()}
+            onInput={(e) => onSelectedDayChange(e.currentTarget.value)}
+          />
+        </label>
+      </header>
+      <main>
+        <Worklogs range={range} />
+      </main>
+    </div>
   );
 };
 

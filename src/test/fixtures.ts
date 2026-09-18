@@ -1,4 +1,5 @@
 import type { WorklogData } from "@/api";
+import { vi } from "vitest";
 
 export function testWorklog(overrides: Partial<WorklogData> = {}): WorklogData {
   return {
@@ -13,3 +14,5 @@ export function testWorklog(overrides: Partial<WorklogData> = {}): WorklogData {
 }
 
 export const jsonResponse = (json: any) => new Response(JSON.stringify(json));
+export const mockJSONRequest = (object: any) =>
+  vi.fn().mockResolvedValue(jsonResponse(object));
