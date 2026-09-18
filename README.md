@@ -1,22 +1,19 @@
 # BarrLog
-BarrLog helps you record what you worked on, how long you spent on it, and how your projects progress over time.
+BarrLog helps you record what you worked on and how long you spent on it.
 
-It started with a practical problem: when working on several projects, it is surprisingly difficult to reconstruct where the time actually went.
+BarrLog is simple to use and will always target quick a easy and easy user experience.
 
-Rather than building another elaborate productivity system, BarrLog focuses on the smallest useful unit: **what did I work on today?**
-
-This is a hono, solidjs, drizzle, neon Single page application with serverside rendering with cloudflare as the deployment target.
+This is an hono/solidjs/drizzle/neon single page application and progressive web app with serverside rendering running on cloudflare workers.
 
 ## Build steps
 Install Dependencies: `pnpm install`
-- "dev": Run in dev mode, hot compiles, best way to start building new features
-- "test":  Test using vitest
-- "build:pwa": Build Progressive Web App (pwa)
-- "build": build app and pwa
-- "preview": Run this before deploying, this will run closer to how it will be deployed on Cloudflare
-- "deploy": Deploy to cloudflare
-- "cf-typegen": Update typescript to include latest cloudflare bindings
-- "db": Upload db url into cloudflare bindings
+- `dev`: Run in dev mode, hot compiles, best way to start building new features
+- `test`:  Test using vitest
+- `build:pwa`: Build Progressive Web App (pwa)
+- `build`: build app and pwa
+- `preview`: Run this before deploying, this will run closer to how it will be deployed on Cloudflare
+- `deploy`: Deploy to cloudflare
+- `cf-typegen`: Update typescript to include latest cloudflare bindings
 
 ## Testing
 1. Install playwrite browser: `pnpm exec playwright install`

@@ -2,8 +2,8 @@
   "name": "Barr Log",
   "short_name": "BarrLog",
   "description": "Log work",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#111719",
+  "background_color": "#111719",
   "display": "standalone",
   "start_url": "/",
   "icons": [
