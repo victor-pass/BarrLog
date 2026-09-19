@@ -38,14 +38,14 @@ async function ensureLabelsExist(
 ): Promise<{ labelIds: number[]; createdLabels: Label[] }> {
   const { existing: existingLabels = [], new: newLabels = [] } = Object.groupBy(
     labels,
-    (l) => (l.id ? "existing" : "new"),
+    ({ id }) => (id ? "existing" : "new"),
   );
 
   const createdLabels: Label[] =
     newLabels.length > 0
       ? await db
           .insert(label)
-          .values(newLabels.map((l) => ({ ...l, user: user.sub })))
+          .values(newLabels.map(({ name }) => ({ name, user: user.sub })))
           .returning()
       : [];
 
