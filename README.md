@@ -17,8 +17,13 @@ Install Dependencies: `pnpm install`
 - `cf-typegen`: Update typescript to include latest cloudflare bindings
 
 ## Testing
+Getting setup:
 1. Install playwrite browser: `pnpm exec playwright install`
-2. Run tests in background: `pnpm test`
+2. Run tests in background: `pnpm test` - `*.ts` tests run in node while `*.tsx` run in playwrite
+
+We use vitest and playwrite to execute tests.  
+- Test fixtures are found under `src/test` 
+- individual tests have a test prefix: `src/[test-target].test.(tsx|ts)`
 
 ## Running Locally
 After installing the dependencies (`pnpm install`) you can start the dev server with:
