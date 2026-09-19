@@ -63,7 +63,7 @@ export class WorklogFormView {
         'input[name="labels"]',
       )!;
       for (const label of labels) {
-        if (!!label.input) {
+        if (label.input) {
           fireEvent.input(input, { target: { value: label.input } });
         }
 
@@ -94,9 +94,12 @@ export class WorklogFormView {
   }
 
   setValues(values: Partial<SettableValues>) {
-    const entries = Object.entries(values) as [keyof SettableValues, any][];
+    const entries = Object.entries(values) as [
+      keyof SettableValues,
+      SettableValues[keyof SettableValues],
+    ][];
     for (const [field, value] of entries) {
-      this.#setters[field](value);
+      (this.#setters[field] as (value: unknown) => void)(value);
     }
   }
 

@@ -13,6 +13,7 @@ export function testWorklog(overrides: Partial<WorklogData> = {}): WorklogData {
   };
 }
 
-export const jsonResponse = (json: any) => new Response(JSON.stringify(json));
-export const mockJSONRequest = (object: any) =>
+export const jsonResponse = (json: unknown) =>
+  new Response(JSON.stringify(json));
+export const mockJSONRequest = (object: unknown) =>
   vi.fn().mockResolvedValue(jsonResponse(object));

@@ -13,7 +13,6 @@ interface WorklogProps {
 
 export const Worklog = (props: WorklogProps) => {
   const { time } = context();
-  const worklogTime = time.displayDateTime(props.worklog.time);
   const [titleExpanded, setTitleExpanded] = createSignal(false);
 
   return (
@@ -36,7 +35,7 @@ export const Worklog = (props: WorklogProps) => {
       </li>
       <li class="notes">{props.worklog.notes}</li>
       <li class="duration">{props.worklog.duration}</li>
-      <li class="time">{worklogTime}</li>
+      <li class="time">{time.displayDateTime(props.worklog.time)}</li>
       <li
         class="labels"
         aria-label={`Labels: ${props.worklog.labels.map((label) => label.name).join(", ")}`}

@@ -1,5 +1,5 @@
-import { Component, onMount, createSignal } from "solid-js";
-import { renderToStringAsync, Show } from "solid-js/web";
+import { Component, onMount, createSignal, Show } from "solid-js";
+import { renderToStringAsync } from "solid-js/web";
 import { Route, Router, useNavigate, useParams } from "@solidjs/router";
 import App from "@/App";
 import { AppContext } from "@/context";
@@ -64,6 +64,7 @@ const WorklogRoute: Component<{ client: ApiClient }> = (props) => {
       when={isValidTimezone(timezone) && isValidDate(date())}
       fallback={<p>Loading...</p>}
     >
+      {/* eslint-disable-next-line solid/reactivity -- client is fixed for the life of this route */}
       <AppContext.Provider value={{ api: props.client, time }}>
         <App
           timezone={timezone}
@@ -78,12 +79,12 @@ const WorklogRoute: Component<{ client: ApiClient }> = (props) => {
   );
 };
 
-export const ContextRouter: Component<Props> = ({ client, url }) => (
-  <Router url={url}>
+export const ContextRouter: Component<Props> = (props) => (
+  <Router url={props.url}>
     <Route path="/" component={RedirectDefaults} />
     <Route
       path="/:timezone/:date"
-      component={() => <WorklogRoute client={client} />}
+      component={() => <WorklogRoute client={props.client} />}
     />
   </Router>
 );

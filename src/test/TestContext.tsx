@@ -1,10 +1,10 @@
-import { vi, Mock } from "vitest";
+import { Mock } from "vitest";
 
 import { AppContext, AppContextValue } from "@/context";
 import { ApiClient } from "@/api";
 import { TestTimeAPI } from "@/test/TestTimeAPI";
 import { splitProps, ParentComponent } from "solid-js";
-import { jsonResponse, mockJSONRequest } from "./fixtures";
+import { mockJSONRequest } from "./fixtures";
 
 type MockedApi<T> = { [K in keyof T]?: Mock };
 
@@ -30,7 +30,7 @@ function testContext(overrides: AppContextOverrides): AppContextValue {
       $get: mockJSONRequest([]),
       ...overrides.api?.label,
     },
-  } as any;
+  } as unknown as ApiClient;
 
   const time = overrides.time ?? new TestTimeAPI("UTC", "1970-01-01T00:00");
 

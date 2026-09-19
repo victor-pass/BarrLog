@@ -110,8 +110,8 @@ h1 {
 }
 
 .filter,
-.worklogForm label,
-.worklogForm .field-label {
+.worklog-form label,
+.worklog-form .field-label {
     display: grid;
     gap: 0.35rem;
 }
@@ -146,7 +146,7 @@ h1 {
 }
 
 .worklog,
-.worklogForm,
+.worklog-form,
 .empty-state {
     margin: 0;
     list-style: none;
@@ -367,21 +367,21 @@ button.delete:focus-visible {
     padding-top: 0.25rem;
 }
 
-.worklogForm ul {
+.worklog-form ul {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.9rem;
     padding: 0.6rem;
 }
 
-.worklogForm ul .expandable {
+.worklog-form ul .expandable {
     display: none;
 }
-.worklogForm.expanded ul .expandable {
+.worklog-form.expanded ul .expandable {
     display: block;
 }
 
-.worklogForm.expanded ul {
+.worklog-form.expanded ul {
     grid-template-areas:
         "error"
         "name"
@@ -393,37 +393,37 @@ button.delete:focus-visible {
     padding: 1rem;
 }
 
-.worklogForm .name {
+.worklog-form .name {
     grid-area: name;
 }
-.worklogForm .time {
+.worklog-form .time {
     grid-area: time;
 }
-.worklogForm .duration {
+.worklog-form .duration {
     grid-area: duration;
 }
-.worklogForm .notes {
+.worklog-form .notes {
     grid-area: notes;
 }
-.worklogForm .labels {
+.worklog-form .labels {
     grid-area: labels;
 }
-.worklogForm .action {
+.worklog-form .action {
     grid-area: action;
 }
-.worklogForm .error {
+.worklog-form .error {
     grid-area: error;
 }
 
-.worklogForm label > span,
-.worklogForm .field-label > span {
+.worklog-form label > span,
+.worklog-form .field-label > span {
     color: var(--muted);
     font-size: 0.78rem;
     font-weight: 700;
 }
 
-.worklogForm input:not([type="hidden"]),
-.worklogForm textarea {
+.worklog-form input:not([type="hidden"]),
+.worklog-form textarea {
     width: 100%;
     min-height: 2.65rem;
     padding: 0.6rem 0.7rem;
@@ -433,19 +433,19 @@ button.delete:focus-visible {
     border-radius: 8px;
 }
 
-.worklogForm textarea {
+.worklog-form textarea {
     min-height: 6rem;
     resize: vertical;
 }
 
-.worklogForm .solid-select-container {
+.worklog-form .solid-select-container {
     min-height: 2.65rem;
     color: var(--text);
     background: var(--surface-subtle);
     border-radius: 8px;
 }
 
-.worklogForm .solid-select-control {
+.worklog-form .solid-select-control {
     min-height: 2.65rem;
     padding: 0.6rem 0.7rem;
     color: var(--text);
@@ -454,26 +454,26 @@ button.delete:focus-visible {
     border-radius: 8px;
 }
 
-.worklogForm .solid-select-control:focus-within {
+.worklog-form .solid-select-control:focus-within {
     outline: 0;
 }
 
-.worklogForm .solid-select-input,
-.worklogForm .solid-select-single-value {
+.worklog-form .solid-select-input,
+.worklog-form .solid-select-single-value {
     color: var(--text);
 }
 
-.worklogForm .solid-select-placeholder {
+.worklog-form .solid-select-placeholder {
     color: var(--muted);
 }
 
-.worklogForm .solid-select-multi-value {
+.worklog-form .solid-select-multi-value {
     color: var(--accent-strong);
     background: var(--accent-soft);
     border-radius: 5px;
 }
 
-.worklogForm .solid-select-multi-value-remove {
+.worklog-form .solid-select-multi-value-remove {
     display: inline-grid;
     width: 1.35rem;
     height: 1.35rem;
@@ -487,13 +487,13 @@ button.delete:focus-visible {
     line-height: 1;
 }
 
-.worklogForm .solid-select-multi-value-remove:hover,
-.worklogForm .solid-select-multi-value-remove:focus-visible {
+.worklog-form .solid-select-multi-value-remove:hover,
+.worklog-form .solid-select-multi-value-remove:focus-visible {
     background: color-mix(in srgb, var(--accent) 14%, transparent);
     text-shadow: none;
 }
 
-.worklogForm .solid-select-list {
+.worklog-form .solid-select-list {
     color: var(--text);
     background: var(--surface);
     border: 1px solid var(--border);
@@ -501,24 +501,24 @@ button.delete:focus-visible {
     box-shadow: var(--shadow);
 }
 
-.worklogForm .solid-select-option:hover,
-.worklogForm .solid-select-option[data-focused="true"] {
+.worklog-form .solid-select-option:hover,
+.worklog-form .solid-select-option[data-focused="true"] {
     color: var(--text);
     background: var(--accent-soft);
 }
 
-.worklogForm .solid-select-option[data-disabled="true"],
-.worklogForm .solid-select-list-placeholder {
+.worklog-form .solid-select-option[data-disabled="true"],
+.worklog-form .solid-select-list-placeholder {
     color: var(--muted);
 }
 
-.worklogForm .action {
+.worklog-form .action {
     display: flex;
     gap: 0.55rem;
     align-items: center;
 }
 
-.worklogForm .action > button {
+.worklog-form .action > button {
     min-height: 2.65rem;
     padding: 0.55rem 0.85rem;
     border: 1px solid var(--border-strong);
@@ -527,19 +527,19 @@ button.delete:focus-visible {
     font-weight: 700;
 }
 
-.worklogForm .action > button.expand {
+.worklog-form .action > button.expand {
     width: 100%;
     color: var(--accent-strong);
     background: var(--surface);
 }
 
-.worklogForm.expanded .action > button.expand {
+.worklog-form.expanded .action > button.expand {
     width: auto;
     color: var(--muted);
     background: var(--surface-subtle);
 }
 
-.worklogForm .action > button[type="submit"] {
+.worklog-form .action > button[type="submit"] {
     display: none;
     flex: 1;
     color: #fff;
@@ -547,20 +547,20 @@ button.delete:focus-visible {
     border-color: var(--accent);
 }
 
-.worklogForm.expanded .action > button[type="submit"] {
+.worklog-form.expanded .action > button[type="submit"] {
     display: inline-flex;
     justify-content: center;
 }
 
-.worklogForm .action > button:hover:not(:disabled) {
+.worklog-form .action > button:hover:not(:disabled) {
     filter: brightness(0.97);
 }
-.worklogForm .action > button:disabled {
+.worklog-form .action > button:disabled {
     cursor: progress;
     opacity: 0.7;
 }
 
-.worklogForm .error {
+.worklog-form .error {
     padding: 0.65rem 0.75rem;
     color: var(--danger);
     background: var(--danger-soft);
@@ -585,7 +585,7 @@ button.delete:focus-visible {
 }
 
 @media (min-width: 640px) {
-    .worklogForm.expanded {
+    .worklog-form.expanded {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "error error"
@@ -596,10 +596,10 @@ button.delete:focus-visible {
         align-items: end;
     }
 
-    .worklogForm .action {
+    .worklog-form .action {
         justify-content: flex-end;
     }
-    .worklogForm.expanded .action > button[type="submit"] {
+    .worklog-form.expanded .action > button[type="submit"] {
         flex: 0 1 auto;
     }
 }
@@ -648,7 +648,7 @@ button.delete:focus-visible {
     .worklog {
         padding: 0.65rem 0.9rem 0.8rem;
     }
-    .worklogForm.expanded {
+    .worklog-form.expanded {
         padding: 0.9rem;
     }
 }

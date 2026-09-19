@@ -1,14 +1,14 @@
 import { Hono } from "hono";
 import { LoadDB, type DB } from "@/db";
 import { eq, and } from "drizzle-orm";
-import { label, worklog, worklog_label } from "@/schema";
+import { label, worklog, worklogLabel } from "@/schema";
 import { requireAuthCookie, authUser, type User } from "@/security";
 import { NeonDbError } from "@neondatabase/serverless";
 import { HTTPException } from "hono/http-exception";
 import { hc } from "hono/client";
 
 type Label = typeof label.$inferSelect;
-type WorklogLabel = typeof worklog_label.$inferSelect;
+type WorklogLabel = typeof worklogLabel.$inferSelect;
 type Worklog = typeof worklog.$inferSelect;
 type WorklogInsert = typeof worklog.$inferInsert;
 
@@ -20,13 +20,13 @@ async function insertWorklog(db: DB, values: WorklogInsert): Promise<Worklog> {
 async function updateWorklog(
   db: DB,
   id: number,
-  authUser: User,
+  user: User,
   values: WorklogInsert,
 ): Promise<Worklog> {
   const [updated] = await db
     .update(worklog)
     .set(values)
-    .where(and(eq(worklog.id, id), eq(worklog.user, authUser.sub)))
+    .where(and(eq(worklog.id, id), eq(worklog.user, user.sub)))
     .returning();
   return updated;
 }
@@ -34,7 +34,7 @@ async function updateWorklog(
 async function ensureLabelsExist(
   db: DB,
   labels: Label[],
-  authUser: User,
+  user: User,
 ): Promise<{ labelIds: number[]; createdLabels: Label[] }> {
   const { existing: existingLabels = [], new: newLabels = [] } = Object.groupBy(
     labels,
@@ -45,17 +45,17 @@ async function ensureLabelsExist(
     newLabels.length > 0
       ? await db
           .insert(label)
-          .values(newLabels.map((label) => ({ ...label, user: authUser.sub })))
+          .values(newLabels.map((l) => ({ ...l, user: user.sub })))
           .returning()
       : [];
 
   return {
-    labelIds: [...existingLabels, ...createdLabels].map((label) => label.id!),
+    labelIds: [...existingLabels, ...createdLabels].map((l) => l.id!),
     createdLabels,
   };
 }
 
-export interface LabelData extends Omit<Label, "user"> {}
+export type LabelData = Omit<Label, "user">;
 
 export interface WorklogData extends Omit<Worklog, "time" | "user"> {
   time: string;
@@ -138,14 +138,14 @@ export const createAPI = (db: LoadDB) =>
       if (!upserted) return c.json({ error: "Worklog not found" }, 404);
       const worklogId = upserted.id;
       await c.var.db
-        .delete(worklog_label)
-        .where(eq(worklog_label.worklogId, worklogId));
+        .delete(worklogLabel)
+        .where(eq(worklogLabel.worklogId, worklogId));
       if (labelIds.length > 0) {
-        const labelsConnections: WorklogLabel[] = labelIds.map((labelId) => ({
+        const worklogLabels: WorklogLabel[] = labelIds.map((labelId) => ({
           worklogId,
           labelId,
         }));
-        await c.var.db.insert(worklog_label).values(labelsConnections);
+        await c.var.db.insert(worklogLabel).values(worklogLabels);
       }
 
       return c.json({

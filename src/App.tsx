@@ -8,10 +8,10 @@ export interface AppProps {
   onSelectedDayChange: (date: string) => void;
 }
 
-const App: Component<AppProps> = ({ selectedDay, onSelectedDayChange }) => {
+const App: Component<AppProps> = (props) => {
   const { time } = context();
 
-  const range = createMemo(() => time.dayTimeRange(selectedDay()));
+  const range = createMemo(() => time.dayTimeRange(props.selectedDay()));
 
   return (
     <div class="app-shell">
@@ -24,8 +24,8 @@ const App: Component<AppProps> = ({ selectedDay, onSelectedDayChange }) => {
           <span>Viewing</span>
           <input
             type="date"
-            value={selectedDay()}
-            onInput={(e) => onSelectedDayChange(e.currentTarget.value)}
+            value={props.selectedDay()}
+            onInput={(e) => props.onSelectedDayChange(e.currentTarget.value)}
           />
         </label>
       </header>

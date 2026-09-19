@@ -1,12 +1,5 @@
 import { context } from "@/context";
-import {
-  Accessor,
-  createMemo,
-  createSignal,
-  JSXElement,
-  onCleanup,
-  Show,
-} from "solid-js";
+import { createSignal, onCleanup, Show } from "solid-js";
 
 const SECONDS = 1000;
 

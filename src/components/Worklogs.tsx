@@ -9,12 +9,12 @@ type WorklogsProps = {
   range: () => { from: string; to: string };
 };
 
-export function Worklogs({ range }: WorklogsProps) {
+export function Worklogs(props: WorklogsProps) {
   const { api } = context();
 
   const [worklogs, { refetch: refetchWorklogs, mutate: mutateWorklogs }] =
     createResource(
-      range,
+      props.range, // eslint-disable-line solid/reactivity -- props.range is already an accessor
       async (range) => {
         const res = await api.worklog.$get({ query: range });
         return res.json();

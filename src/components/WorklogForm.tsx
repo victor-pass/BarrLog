@@ -13,7 +13,7 @@ import { Select, createOptions } from "@thisbeyond/solid-select";
 import "@thisbeyond/solid-select/style.css";
 import { WorklogData, LabelData } from "@/api";
 
-interface WorkLogFormProps {
+interface WorklogFormProps {
   worklog: () => undefined | WorklogData;
   labels: () => LabelData[];
   onLabelsCreated: () => void;
@@ -22,7 +22,7 @@ interface WorkLogFormProps {
   setExpanded: Setter<boolean>;
 }
 
-export function WorklogForm(props: WorkLogFormProps) {
+export function WorklogForm(props: WorklogFormProps) {
   const { api, time } = context();
 
   const defaultState = (): WorklogData => ({
@@ -37,7 +37,7 @@ export function WorklogForm(props: WorkLogFormProps) {
   const [mounted, setMounted] = createSignal(false);
   onMount(() => setMounted(true));
 
-  const { expanded, setExpanded } = props;
+  const { expanded, setExpanded } = props; // eslint-disable-line solid/reactivity -- already accessor/setter functions
   const [submitting, setSubmitting] = createSignal(false);
   const [error, setError] = createSignal<string | null>(null);
   const [state, setState] = createStore<WorklogData>(defaultState());
@@ -88,7 +88,7 @@ export function WorklogForm(props: WorkLogFormProps) {
 
   return (
     <form
-      class="worklogForm"
+      class="worklog-form"
       classList={{ expanded: expanded() }}
       onSubmit={handleSubmit}
     >
@@ -168,7 +168,7 @@ export function WorklogForm(props: WorkLogFormProps) {
             name="expand"
             type="button"
             class="expand"
-            onclick={() => setExpanded((prev) => !prev)}
+            onClick={() => setExpanded((prev) => !prev)}
           >
             {expanded() ? "Close" : "Add worklog"}
           </button>

@@ -23,7 +23,7 @@ export const label = pgTable("label", {
   name: text("name").notNull(),
 });
 
-export const worklog_label = pgTable(
+export const worklogLabel = pgTable(
   "worklog_label",
   {
     worklogId: integer("worklog_id")

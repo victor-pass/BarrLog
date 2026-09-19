@@ -9,6 +9,7 @@ This is an hono/solidjs/drizzle/neon single page application and progressive web
 Install Dependencies: `pnpm install`
 - `dev`: Run in dev mode, hot compiles, best way to start building new features
 - `test`:  Test using vitest
+- `lint`: Lint the codebase with ESLint (`lint:fix` to auto-fix)
 - `build:pwa`: Build Progressive Web App (pwa)
 - `build`: build app and pwa
 - `preview`: Run this before deploying, this will run closer to how it will be deployed on Cloudflare

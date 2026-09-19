@@ -1,7 +1,7 @@
-import { Hono, MiddlewareHandler, Context, Next } from "hono";
+import { Hono, MiddlewareHandler, Context } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 import { googleAuth } from "@hono/oauth-providers/google";
-import { sign, jwt, type JwtVariables, verify } from "hono/jwt";
+import { sign, jwt, verify } from "hono/jwt";
 import { noAuth } from "@/noAuthHandler";
 
 const AUTH_TOKEN = "auth_token";
@@ -82,7 +82,7 @@ export const requireAuthPage: MiddlewareHandler = async (c, next) => {
     const payload = await verify(token!, c.env.JWT_SECRET, alg);
     c.set(JWT_PAYLOAD, payload);
     return await next();
-  } catch (error) {
+  } catch {
     return c.redirect(AUTH_PATH);
   }
 };

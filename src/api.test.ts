@@ -4,7 +4,7 @@ import { testClient } from "hono/testing";
 import { expect, describe, it } from "vitest";
 import { randomBytes } from "node:crypto";
 import { sign } from "hono/jwt";
-import { label, worklog, worklog_label } from "./schema";
+import { label, worklog, worklogLabel } from "./schema";
 
 const JWT_SECRET = randomBytes(32).toString("hex");
 
@@ -60,7 +60,7 @@ describe("worklog.$get", () => {
       { name: "test", user: "dev_user" },
       { name: "other", user: "other_user" },
     ]);
-    await db.insert(worklog_label).values([
+    await db.insert(worklogLabel).values([
       { worklogId: 1, labelId: 1 },
       { worklogId: 1, labelId: 2 },
     ]);
@@ -95,7 +95,7 @@ describe("worklog.$delete", () => {
     ]);
 
     await db.insert(label).values([{ name: "test", user: "dev_user" }]);
-    await db.insert(worklog_label).values([{ worklogId: 1, labelId: 1 }]);
+    await db.insert(worklogLabel).values([{ worklogId: 1, labelId: 1 }]);
 
     await client.worklog.$delete(
       { json: { id: 1 } },
@@ -103,7 +103,7 @@ describe("worklog.$delete", () => {
     );
 
     expect(await db.select().from(worklog)).toEqual([]);
-    expect(await db.select().from(worklog_label)).toEqual([]);
+    expect(await db.select().from(worklogLabel)).toEqual([]);
     expect(await db.select().from(label)).toEqual([
       { id: 1, name: "test", user: "dev_user" },
     ]);
@@ -122,7 +122,7 @@ describe("worklog.$delete", () => {
     ]);
 
     await db.insert(label).values([{ name: "test", user: "dev_user" }]);
-    await db.insert(worklog_label).values([{ worklogId: 1, labelId: 1 }]);
+    await db.insert(worklogLabel).values([{ worklogId: 1, labelId: 1 }]);
 
     await client.worklog.$delete(
       { json: { id: 1 } },
@@ -139,7 +139,7 @@ describe("worklog.$delete", () => {
         duration: "01:00:00",
       },
     ]);
-    expect(await db.select().from(worklog_label)).toEqual([
+    expect(await db.select().from(worklogLabel)).toEqual([
       { worklogId: 1, labelId: 1 },
     ]);
     expect(await db.select().from(label)).toEqual([
