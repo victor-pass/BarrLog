@@ -62,6 +62,10 @@ export interface WorklogData extends Omit<Worklog, "time" | "user"> {
   labels: LabelData[];
 }
 
+interface WorklogDataDB extends Omit<WorklogData, "time"> {
+  time: Date;
+}
+
 export const createAPI = (db: LoadDB) =>
   new Hono<{
     Bindings: CloudflareBindings;
@@ -106,7 +110,7 @@ export const createAPI = (db: LoadDB) =>
           },
         },
       });
-      return c.json(result);
+      return c.json(result as WorklogDataDB[]);
     })
     .delete("/worklog", async (c) => {
       const { id } = await c.req.json();

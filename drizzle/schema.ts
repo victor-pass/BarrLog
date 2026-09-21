@@ -25,7 +25,7 @@ export const worklog = pgTable("worklog", {
 ]);
 
 export const worklogLabel = pgTable("worklog_label", {
-	worklogId: integer("worklog_id").notNull().references(() => worklog.id),
+	worklogId: integer("worklog_id").notNull().references(() => worklog.id, { onDelete: "cascade" } ),
 	labelId: integer("label_id").notNull().references(() => label.id),
 }, (table) => [
 	primaryKey({ columns: [table.worklogId, table.labelId], name: "worklog_label_pkey"}),

@@ -1,4 +1,4 @@
-import { expect, vi, describe, it, VitestUtils, beforeEach } from "vitest";
+import { expect, vi, describe, it, Mock, beforeEach } from "vitest";
 import { render } from "@solidjs/testing-library";
 import { TestContext } from "@/test/TestContext";
 import { Worklog } from "@/components/Worklog";
@@ -15,9 +15,9 @@ describe("Worklog", () => {
     user: "1",
     labels: [{ name: "label", id: 1 }],
   };
-  let $delete: VitestUtils["fn"];
-  let deleted: VitestUtils["fn"];
-  let edit: VitestUtils["fn"];
+  let $delete: Mock;
+  let deleted: Mock;
+  let edit: Mock;
   let worklog: WorklogView;
 
   beforeEach(() => {
