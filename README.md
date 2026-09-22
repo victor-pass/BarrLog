@@ -59,9 +59,8 @@ To re-generate typescript types for cloudflare bindings:
 ```txt
 pnpm run cf-typegen
 ```
-
 - [latest](https://barr.victorpass.dev)
-- [all deployments](https://dash.cloudflare.com/0c855cdf521de8fed5ad5d3ac1c22763/workers/services/view/worklogger/production/deployments)
+- [all deployments](https://dash.cloudflare.com/0c855cdf521de8fed5ad5d3ac1c22763/workers/services/view/barrlog/production/deployments)
 - [Change subdomain](https://dash.cloudflare.com/0c855cdf521de8fed5ad5d3ac1c22763/workers/subdomain)
 
 ## DB
@@ -72,4 +71,4 @@ view database: `npx drizzle-kit studio`
 
 ## Authentication
 We authenticate via google auth
-Locally, authentication will not run by default.  To use google authenticator please set the`GOOGLE_ID` and `GOOGLE_SECRET` from the [google auth console](https://console.cloud.google.com/auth/clients/1009621445851-9f41276apmvvrekvlhl1casmmuu8sqgl.apps.googleusercontent.com)
+Locally, authentication will not run by default.  To use google authenticator please set the`GOOGLE_ID` and `GOOGLE_SECRET` from the [google auth console](https://console.cloud.google.com/apis/credentials?authuser=2&orgonly=true&project=barrlogger-509419&supportedpurview=project,folder,organizationId)
