@@ -4,8 +4,7 @@ import {
   onMount,
   Show,
   createMemo,
-  Accessor,
-  Setter,
+  createResource,
 } from "solid-js";
 import { context } from "@/context";
 import { createStore } from "solid-js/store";
@@ -15,11 +14,8 @@ import { WorklogData, LabelData } from "@/api";
 
 interface WorklogFormProps {
   worklog: () => undefined | WorklogData;
-  labels: () => LabelData[];
-  onLabelsCreated: () => void;
   onSubmitted: () => void;
-  expanded: Accessor<boolean>;
-  setExpanded: Setter<boolean>;
+  cancel: () => void;
 }
 
 export function WorklogForm(props: WorklogFormProps) {
@@ -37,12 +33,21 @@ export function WorklogForm(props: WorklogFormProps) {
   const [mounted, setMounted] = createSignal(false);
   onMount(() => setMounted(true));
 
-  const { expanded, setExpanded } = props; // eslint-disable-line solid/reactivity -- already accessor/setter functions
   const [submitting, setSubmitting] = createSignal(false);
   const [error, setError] = createSignal<string | null>(null);
   const [state, setState] = createStore<WorklogData>(defaultState());
+  const [expanded, setExpanded] = createSignal(false);
+  const show = createMemo(() => expanded() || !!props.worklog());
   const usedLabels = createMemo(
     () => new Set(state.labels.map(({ name }) => name)),
+  );
+
+  const [labels, { refetch: refetchLabels }] = createResource(
+    async () => {
+      const res = await api.label.$get();
+      return res.json();
+    },
+    { initialValue: [] },
   );
 
   createEffect(() => {
@@ -55,7 +60,7 @@ export function WorklogForm(props: WorklogFormProps) {
     });
   });
 
-  const selectProps = createOptions(() => props.labels(), {
+  const selectProps = createOptions(() => labels(), {
     key: "name",
     createable: true,
     disable: (name: string) => usedLabels().has(name),
@@ -74,9 +79,10 @@ export function WorklogForm(props: WorklogFormProps) {
       });
       if (!res.ok) throw new Error("Failed to save worklog entry");
       const result = await res.json();
-      if (result.createdLabels) props.onLabelsCreated();
+      if (result.createdLabels) refetchLabels();
 
       setState(defaultState());
+      setExpanded(false);
       props.onSubmitted();
     } catch (err) {
       // TODO: Can probably recreate this using an <ErrorBoundary>
@@ -89,12 +95,27 @@ export function WorklogForm(props: WorklogFormProps) {
   return (
     <form
       class="worklog-form"
-      classList={{ expanded: expanded() }}
+      classList={{ expanded: show() }}
       onSubmit={handleSubmit}
     >
       <input hidden name="id" value={state.id} />
       <ul>
         {error() && <li class="error">{error()}</li>}
+        <li class="top">
+          <button
+            class="toggle-open"
+            type="button"
+            aria-label={show() ? "Close worklog form" : "Add worklog"}
+            onClick={() =>
+              setExpanded((prev) => {
+                if (prev) props.cancel();
+                return !prev;
+              })
+            }
+          >
+            {show() ? "✕" : "Add worklog"}
+          </button>
+        </li>
         <li class="name expandable">
           <label>
             <span>What did you work on?</span>
@@ -158,17 +179,9 @@ export function WorklogForm(props: WorklogFormProps) {
             </Show>
           </div>
         </li>
-        <li class="action">
+        <li class="action expandable">
           <button type="submit" disabled={submitting()} name="save">
             {submitting() ? "Saving…" : "Save entry"}
-          </button>
-          <button
-            name="expand"
-            type="button"
-            class="expand"
-            onClick={() => setExpanded((prev) => !prev)}
-          >
-            {expanded() ? "Close" : "Add worklog"}
           </button>
         </li>
       </ul>
