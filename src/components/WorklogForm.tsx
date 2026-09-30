@@ -113,9 +113,7 @@ export function WorklogForm(props: WorklogFormProps) {
               type="time"
               name="time"
               value={state.time}
-              onInput={(e) =>
-                setState("time", time.dateTime(e.currentTarget.value))
-              }
+              onInput={(e) => setState("time", e.currentTarget.value)}
             />
           </label>
         </li>
