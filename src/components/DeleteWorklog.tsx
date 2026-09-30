@@ -1,13 +1,11 @@
 import { context } from "@/context";
 import { createSignal, onCleanup, Show } from "solid-js";
 
-const SECONDS = 1000;
-
 export function DeleteWorklog(props: { id: number; onDeleted: () => void }) {
   const { api } = context();
 
   const [deleting, setDeleting] = createSignal(false);
-  let timer: NodeJS.Timeout | undefined = undefined;
+  let timer: number | undefined = undefined;
 
   const deleteWorklog = async () => {
     const res = await api.worklog.$delete({ json: { id: props.id } });
@@ -18,7 +16,7 @@ export function DeleteWorklog(props: { id: number; onDeleted: () => void }) {
 
   const startDelete = () => {
     setDeleting(true);
-    timer = setTimeout(deleteWorklog, 5 * SECONDS);
+    timer = setTimeout(deleteWorklog, 4500);
   };
 
   const cancelDelete = () => {
