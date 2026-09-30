@@ -6,6 +6,7 @@ import { AppContext } from "@/context";
 import { TimeAPI } from "@/TimeAPI";
 import "temporal-polyfill/global";
 import { ApiClient } from "@/api";
+import { StorageEngine } from "@/store";
 
 interface Props {
   client: ApiClient;
@@ -64,8 +65,12 @@ const WorklogRoute: Component<{ client: ApiClient }> = (props) => {
       when={isValidTimezone(timezone) && isValidDate(date())}
       fallback={<p>Loading...</p>}
     >
-      {/* eslint-disable-next-line solid/reactivity -- client is fixed for the life of this route */}
-      <AppContext.Provider value={{ api: props.client, time }}>
+      <AppContext.Provider
+        value={
+          /* eslint-disable-next-line solid/reactivity -- props don't change */
+          { api: props.client, time }
+        }
+      >
         <App
           timezone={timezone}
           selectedDay={date}

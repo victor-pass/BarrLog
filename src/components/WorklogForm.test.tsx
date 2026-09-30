@@ -1,6 +1,6 @@
 import { expect, vi, describe, it } from "vitest";
 import { render } from "@solidjs/testing-library";
-import { WorklogForm } from "./WorklogForm";
+import { WorklogForm } from "@/components/WorklogForm";
 import { testWorklog } from "@/test/fixtures";
 import { TestContext } from "@/test/TestContext";
 import { WorklogFormView } from "@/test/WorklogFormView";
@@ -10,14 +10,7 @@ describe("WorklogForm", () => {
   it("has correct defaults", () => {
     const { container } = render(() => (
       <TestContext>
-        <WorklogForm
-          worklog={() => undefined}
-          labels={() => []}
-          onLabelsCreated={vi.fn()}
-          onSubmitted={vi.fn()}
-          expanded={() => false}
-          setExpanded={vi.fn()}
-        />
+        <WorklogForm worklog={() => undefined} onSubmitted={vi.fn()} />
       </TestContext>
     ));
 

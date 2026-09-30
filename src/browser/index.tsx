@@ -4,6 +4,8 @@ import { ApiType } from "@/api";
 import { hc } from "hono/client";
 
 const client = hc<ApiType>(window.location?.origin ?? "");
+const url = window.location.pathname;
+const props = { client, url };
 
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -11,7 +13,4 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
   });
 }
 
-hydrate(
-  () => <ContextRouter client={client} url={window.location.pathname} />,
-  document.getElementById("root")!,
-);
+hydrate(() => <ContextRouter {...props} />, document.getElementById("root")!);

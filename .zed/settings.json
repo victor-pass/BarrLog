@@ -1,0 +1,21 @@
+{
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "preferences": {
+            // Hide Solid's server-specific type files from auto-import suggestions;
+            // import from "solid-js" (or "solid-js/web", "solid-js/store") instead.
+            "autoImportFileExcludePatterns": [
+              "**/node_modules/solid-js/types/server/**",
+              "**/node_modules/solid-js/web/types/server/**",
+              "**/node_modules/solid-js/store/types/server/**"
+            ],
+            // Prefer the "@/*" tsconfig alias over "./Foo" relative imports.
+            "importModuleSpecifier": "non-relative"
+          }
+        }
+      }
+    }
+  }
+}

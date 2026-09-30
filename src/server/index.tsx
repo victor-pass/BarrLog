@@ -10,7 +10,6 @@ import { useAuthenticator, requireAuthPage } from "@/security";
 import { remoteDB } from "@/db";
 
 const api = createAPI(remoteDB);
-
 const client = (c: Context) =>
   hc<ApiType>("http://isServer", {
     fetch: async (input: RequestInfo | URL, init?: RequestInit) =>
@@ -28,14 +27,13 @@ const client = (c: Context) =>
         c.executionCtx,
       ),
   });
+const props = (c: Context) => ({
+  client: client(c),
+  url: new URL(c.req.url).pathname,
+});
 
-const url = (c: Context) => new URL(c.req.url).pathname;
 const renderRoot = async (c: Context) =>
-  c.render(
-    <div id="root">
-      {raw(await renderContextRouter({ client: client(c), url: url(c) }))}
-    </div>,
-  );
+  c.render(<div id="root">{raw(await renderContextRouter(props(c)))}</div>);
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 

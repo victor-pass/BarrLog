@@ -7,6 +7,7 @@
     --muted: #61707b;
     --border: #d7e0e5;
     --border-strong: #b8c7cf;
+    --accent-fg: #f5f7f8;
     --accent: #0b6e83;
     --accent-strong: #07576a;
     --accent-soft: #e4f2f5;
@@ -83,6 +84,8 @@ textarea:focus-visible,
     width: min(100% - 2rem, 860px);
     margin: 0 auto;
     padding: 2rem 0 1rem;
+    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .app-header {
@@ -154,6 +157,10 @@ h1 {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+}
+
+.worklog-form {
+    position: relative;
 }
 
 .worklog {
@@ -356,10 +363,6 @@ button.delete:focus-visible {
         var(--shadow);
 }
 
-.worklog.editing > li:not(.name, .actions) {
-    display: none;
-}
-
 .forms {
     position: sticky;
     bottom: 1rem;
@@ -372,6 +375,7 @@ button.delete:focus-visible {
     grid-template-columns: 1fr;
     gap: 0.9rem;
     padding: 0.6rem;
+    list-style: none;
 }
 
 .worklog-form ul .expandable {
@@ -518,7 +522,7 @@ button.delete:focus-visible {
     align-items: center;
 }
 
-.worklog-form .action > button {
+.worklog-form button {
     min-height: 2.65rem;
     padding: 0.55rem 0.85rem;
     border: 1px solid var(--border-strong);
@@ -527,29 +531,43 @@ button.delete:focus-visible {
     font-weight: 700;
 }
 
-.worklog-form .action > button.expand {
+.worklog-form button.toggle-open {
     width: 100%;
-    color: var(--accent-strong);
-    background: var(--surface);
-}
-
-.worklog-form.expanded .action > button.expand {
-    width: auto;
-    color: var(--muted);
-    background: var(--surface-subtle);
-}
-
-.worklog-form .action > button[type="submit"] {
-    display: none;
-    flex: 1;
-    color: #fff;
+    color: var(--accent-fg);
     background: var(--accent);
-    border-color: var(--accent);
+}
+
+.worklog-form.expanded .top {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.75rem;
+}
+
+.worklog-form.expanded button.toggle-open {
+    width: 1rem;
+    height: 1rem;
+    min-height: 1rem;
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+.worklog-form button.toggle-open:hover,
+.worklog-form button.toggle-open:focus-visible {
+    color: var(--accent-strong);
+    background: var(--accent-soft);
 }
 
 .worklog-form.expanded .action > button[type="submit"] {
     display: inline-flex;
     justify-content: center;
+    color: var(--accent-fg);
+    background: var(--accent);
+    border-color: var(--accent);
 }
 
 .worklog-form .action > button:hover:not(:disabled) {
@@ -585,15 +603,15 @@ button.delete:focus-visible {
 }
 
 @media (min-width: 640px) {
-    .worklog-form.expanded {
+    .worklog-form.expanded ul {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "error error"
             "name name"
             "time duration"
             "notes notes"
-            "labels action";
-        align-items: end;
+            "labels labels"
+            "action action";
     }
 
     .worklog-form .action {
@@ -657,7 +675,7 @@ button.delete:focus-visible {
     .worklog {
         grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
-            "name action"
+            "name actions"
             "labels labels"
             "notes notes"
             "time duration";
