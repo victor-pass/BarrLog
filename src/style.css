@@ -363,10 +363,6 @@ button.delete:focus-visible {
         var(--shadow);
 }
 
-.worklog.editing > li:not(.name, .actions) {
-    display: none;
-}
-
 .forms {
     position: sticky;
     bottom: 1rem;
@@ -543,18 +539,22 @@ button.delete:focus-visible {
 
 .worklog-form.expanded .top {
     position: absolute;
-    top: 0.75rem;
+    top: 0.4rem;
     right: 0.75rem;
 }
 
 .worklog-form.expanded button.toggle-open {
-    width: 2rem;
-    height: 2rem;
+    width: 1rem;
+    height: 1rem;
+    min-height: 1rem;
     padding: 0;
+    display: inline-grid;
+    place-items: center;
     color: var(--muted);
     background: transparent;
     border: 0;
     font-size: 0.8rem;
+    line-height: 1;
 }
 .worklog-form button.toggle-open:hover,
 .worklog-form button.toggle-open:focus-visible {
@@ -565,6 +565,9 @@ button.delete:focus-visible {
 .worklog-form.expanded .action > button[type="submit"] {
     display: inline-flex;
     justify-content: center;
+    color: var(--accent-fg);
+    background: var(--accent);
+    border-color: var(--accent);
 }
 
 .worklog-form .action > button:hover:not(:disabled) {
@@ -600,15 +603,15 @@ button.delete:focus-visible {
 }
 
 @media (min-width: 640px) {
-    .worklog-form.expanded {
+    .worklog-form.expanded ul {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "error error"
-            "name top"
+            "name name"
             "time duration"
             "notes notes"
-            "labels action";
-        align-items: end;
+            "labels labels"
+            "action action";
     }
 
     .worklog-form .action {
@@ -672,7 +675,7 @@ button.delete:focus-visible {
     .worklog {
         grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
-            "name action"
+            "name actions"
             "labels labels"
             "notes notes"
             "time duration";
