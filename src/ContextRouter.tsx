@@ -1,16 +1,17 @@
-import { Component, onMount, createSignal, Show } from "solid-js";
+import { Component, onMount, createSignal, Show, splitProps } from "solid-js";
 import { renderToStringAsync } from "solid-js/web";
 import { Route, Router, useNavigate, useParams } from "@solidjs/router";
 import App from "@/App";
 import { AppContext } from "@/context";
 import { TimeAPI } from "@/TimeAPI";
 import "temporal-polyfill/global";
-import { ApiClient } from "@/api";
-import { StorageEngine } from "@/store";
+import { ApiClient } from "@/persistence/api";
+import { StorageEngine } from "@/persistence/store";
 
 interface Props {
   client: ApiClient;
   url?: string;
+  store: StorageEngine;
 }
 
 function isValidTimezone(timezone: string): boolean {
@@ -45,7 +46,9 @@ const RedirectDefaults: Component = () => {
   return <p>Loading...</p>;
 };
 
-const WorklogRoute: Component<{ client: ApiClient }> = (props) => {
+const WorklogRoute: Component<{ client: ApiClient; store: StorageEngine }> = (
+  props,
+) => {
   const params = useParams<{ timezone: string; date: string }>();
   const navigate = useNavigate();
 
@@ -68,7 +71,7 @@ const WorklogRoute: Component<{ client: ApiClient }> = (props) => {
       <AppContext.Provider
         value={
           /* eslint-disable-next-line solid/reactivity -- props don't change */
-          { api: props.client, time }
+          { api: props.client, time, store: props.store }
         }
       >
         <App
@@ -89,11 +92,13 @@ export const ContextRouter: Component<Props> = (props) => (
     <Route path="/" component={RedirectDefaults} />
     <Route
       path="/:timezone/:date"
-      component={() => <WorklogRoute client={props.client} />}
+      component={() => (
+        <WorklogRoute client={props.client} store={props.store} />
+      )}
     />
   </Router>
 );
 
-export const renderContextRouter = async ({ client, url }: Props) => {
-  return renderToStringAsync(() => <ContextRouter client={client} url={url} />);
+export const renderContextRouter = async (props: Props) => {
+  return renderToStringAsync(() => <ContextRouter {...props} />);
 };

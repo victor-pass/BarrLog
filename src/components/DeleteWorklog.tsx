@@ -2,16 +2,14 @@ import { context } from "@/context";
 import { createSignal, onCleanup, Show } from "solid-js";
 
 export function DeleteWorklog(props: { id: number; onDeleted: () => void }) {
-  const { api } = context();
+  const { store } = context();
 
   const [deleting, setDeleting] = createSignal(false);
-  let timer: number | undefined = undefined;
+  let timer: NodeJS.Timeout | undefined = undefined;
 
   const deleteWorklog = async () => {
-    const res = await api.worklog.$delete({ json: { id: props.id } });
-    if (!res.ok) throw new Error("Failed to delete worklog entry");
+    await store.deleteWorklog(props.id);
     props.onDeleted();
-    return await res.json();
   };
 
   const startDelete = () => {

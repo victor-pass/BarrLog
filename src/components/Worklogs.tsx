@@ -1,26 +1,26 @@
-import { createResource, createSignal } from "solid-js";
+import { createEffect, createResource, createSignal } from "solid-js";
 import { WorklogForm } from "@/components/WorklogForm";
 import { Worklog } from "@/components/Worklog";
 import { context } from "@/context";
 import { For, Show, Suspense } from "solid-js";
-import { WorklogData } from "@/api";
+import { WorklogData } from "@/persist/api";
 
 type WorklogsProps = {
   range: () => { from: string; to: string };
 };
 
 export function Worklogs(props: WorklogsProps) {
-  const { api } = context();
+  const { store } = context();
 
   const [worklogs, { refetch: refetchWorklogs, mutate: mutateWorklogs }] =
     createResource(
       props.range, // eslint-disable-line solid/reactivity -- props.range is already an accessor
-      async (range) => {
-        const res = await api.worklog.$get({ query: range });
-        return res.json();
-      },
+      async (range) => store.getWorklogs(range),
       { initialValue: [] },
     );
+  createEffect(() => {
+    if (worklogs.error) console.error(worklogs.error);
+  });
 
   const [editingWorklog, setEditingWorklog] = createSignal<WorklogData>();
 

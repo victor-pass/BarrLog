@@ -1,11 +1,11 @@
 import { Mock } from "vitest";
 
 import { AppContext, AppContextValue } from "@/context";
-import { ApiClient } from "@/api";
+import { ApiClient } from "@/persist/api";
 import { TestTimeAPI } from "@/test/TestTimeAPI";
 import { splitProps, ParentComponent } from "solid-js";
 import { mockJSONRequest } from "@/test/fixtures";
-import { ServerStorageEngine } from "@/store";
+import { ServerStorageEngine } from "@/persist/store";
 
 type MockedApi<T> = { [K in keyof T]?: Mock };
 
@@ -34,8 +34,9 @@ function testContext(overrides: AppContextOverrides): AppContextValue {
   } as unknown as ApiClient;
 
   const time = overrides.time ?? new TestTimeAPI("UTC", "1970-01-01T00:00");
+  const store = new ServerStorageEngine(api); //Todo: should we use a mock here or the browser storage engine?
 
-  return { api, time };
+  return { api, time, store };
 }
 
 export const TestContext: ParentComponent<AppContextOverrides> = (props) => {

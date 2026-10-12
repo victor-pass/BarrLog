@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import { LoadDB, type DB } from "@/db";
+import { LoadDB, type DB } from "@/persist/db";
 import { eq, and } from "drizzle-orm";
-import { label, worklog, worklogLabel } from "@/schema";
+import { label, worklog, worklogLabel } from "@/persist/dbSchema";
 import { requireAuthCookie, authUser, type User } from "@/security";
 import { NeonDbError } from "@neondatabase/serverless";
 import { HTTPException } from "hono/http-exception";

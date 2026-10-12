@@ -10,7 +10,7 @@ import { context } from "@/context";
 import { createStore } from "solid-js/store";
 import { Select, createOptions } from "@thisbeyond/solid-select";
 import "@thisbeyond/solid-select/style.css";
-import { WorklogData, LabelData } from "@/api";
+import { WorklogData, LabelData } from "@/persist/api";
 
 interface WorklogFormProps {
   worklog: () => undefined | WorklogData;

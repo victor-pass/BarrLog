@@ -1,4 +1,4 @@
-import type { WorklogData } from "@/api";
+import type { WorklogData } from "@/persist/api";
 import { vi } from "vitest";
 
 export function testWorklog(overrides: Partial<WorklogData> = {}): WorklogData {

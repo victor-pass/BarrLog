@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
 import { relations } from "@/../drizzle/relations";
-import { type LoadDB } from "@/db";
+import { type LoadDB } from "@/persist/db";
 import { PGlite } from "@electric-sql/pglite";
 
 let snapshot: File | Blob | undefined = undefined;

@@ -3,11 +3,12 @@
 import { Hono, type Context } from "hono";
 import { raw } from "hono/html";
 import { renderer } from "@/server/renderer";
-import { createAPI, ApiType } from "@/api";
+import { createAPI, ApiType } from "@/persist/api";
 import { hc } from "hono/client";
 import { renderContextRouter } from "@/ContextRouter";
 import { useAuthenticator, requireAuthPage } from "@/security";
-import { remoteDB } from "@/db";
+import { remoteDB } from "@/persist/db";
+import { ServerStorageEngine } from "@/persist/store";
 
 const api = createAPI(remoteDB);
 const client = (c: Context) =>
@@ -30,6 +31,7 @@ const client = (c: Context) =>
 const props = (c: Context) => ({
   client: client(c),
   url: new URL(c.req.url).pathname,
+  store: new ServerStorageEngine(client(c)),
 });
 
 const renderRoot = async (c: Context) =>

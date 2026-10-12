@@ -1,8 +1,10 @@
 import { createContext, useContext } from "solid-js";
-import type { ApiClient } from "@/api";
+import type { ApiClient } from "@/persist/api";
 import type { TimeAPI } from "@/TimeAPI";
+import { StorageEngine } from "@/persist/store";
 
 export interface AppContextValue {
+  store: StorageEngine;
   api: ApiClient;
   time: TimeAPI;
 }

@@ -1,6 +1,6 @@
 import { DeleteWorklog } from "@/components/DeleteWorklog";
 import { createSignal, For } from "solid-js";
-import { WorklogData } from "@/api";
+import { WorklogData } from "@/persistence/api";
 import { context } from "@/context";
 import { EditWorklog } from "@/components/EditWorklog";
 

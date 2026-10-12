@@ -1,10 +1,10 @@
-import { createAPI } from "@/api";
+import { createAPI } from "@/persist/api";
 import { inMemoryDB } from "@/test/inMemoryDB";
 import { testClient } from "hono/testing";
 import { expect, describe, it } from "vitest";
 import { randomBytes } from "node:crypto";
 import { sign } from "hono/jwt";
-import { label, worklog, worklogLabel } from "./schema";
+import { label, worklog, worklogLabel } from "@/persist/schema";
 
 const JWT_SECRET = randomBytes(32).toString("hex");
 
